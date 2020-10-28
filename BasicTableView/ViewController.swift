@@ -23,10 +23,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return data.count
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Section: " + String(section)
+    }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CELL")
         cell?.textLabel?.text=data[indexPath.row]
+        cell?.detailTextLabel?.text=String(indexPath.row)
         return cell!
     }
 }
