@@ -14,8 +14,27 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let images = [UIImage(named: "car1"),UIImage(named: "car2"),UIImage(named: "car3"),UIImage(named: "car4"),UIImage(named: "car5"),UIImage(named: "car6")]
     let labelCars = ["Android","iOs","Everything","always","yo","me"]
     
+    let url = "http://dummy.restapiexample.com/api/v1/employees"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("viewDidLoad.....")
+        URLSession.shared.dataTask(with: URL(string: url)!, completionHandler: { data, response, error in
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else{
+                return
+            }
+            guard let dataResponse = data else {
+                print(error.debugDescription)
+                return
+            }
+            if let result = NSString(data: dataResponse, encoding: String.Encoding.utf8.rawValue) as String?{
+                print(result)
+            }
+            guard let data = data, error == nil else{
+                print("something went wrong....")
+                return
+            }
+            }).resume()
         // Do any additional setup after loading the view.
         myTable.dataSource = self
         myTable.delegate = self
